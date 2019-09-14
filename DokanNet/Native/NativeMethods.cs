@@ -102,6 +102,72 @@ namespace DokanNet.Native
             ref int outFileAttributesAndFlags,
             ref int outCreationDisposition);
 
+        /// <summary>
+        /// Notify dokan that a file or a directory has been created.
+        /// </summary>
+        /// <param name="filePath">Full path to the file or directory, including mount point.</param>
+        /// <param name="isDirectory">Indicates if the path is a directory.</param>
+        /// <returns>
+        /// <see cref="true"/> if notification succeeded.
+        /// </returns>
+        [DllImport(DOKAN_DLL, ExactSpelling = true)]
+        public static extern bool DokanNotifyCreate(
+            [MarshalAs(UnmanagedType.LPWStr)] string filePath,
+            bool isDirectory);
+
+        /// <summary>
+        /// Notify dokan that a file or a directory has been deleted.
+        /// </summary>
+        /// <param name="filePath">Full path to the file or directory, including mount point.</param>
+        /// <param name="isDirectory">Indicates if the path is a directory.</param>
+        /// <returns>
+        /// <see cref="true"/> if notification succeeded.
+        /// </returns>
+        [DllImport(DOKAN_DLL, ExactSpelling = true)]
+        public static extern bool DokanNotifyDelete(
+            [MarshalAs(UnmanagedType.LPWStr)] string filePath,
+            bool isDirectory);
+
+        /// <summary>
+        /// Notify dokan that file or directory attributes have changed.
+        /// </summary>
+        /// <param name="filePath">Full path to the file or directory, including mount point.</param>
+        /// <returns>
+        /// <see cref="true"/> if notification succeeded.
+        /// </returns>
+        [DllImport(DOKAN_DLL, ExactSpelling = true)]
+        public static extern bool DokanNotifyUpdate(
+            [MarshalAs(UnmanagedType.LPWStr)] string filePath);
+
+        /// <summary>
+        /// Notify dokan that file or directory extended attributes have changed.
+        /// </summary>
+        /// <param name="filePath">Full path to the file or directory, including mount point.</param>
+        /// <returns>
+        /// <see cref="true"/> if notification succeeded.
+        /// </returns>
+        [DllImport(DOKAN_DLL, ExactSpelling = true)]
+        public static extern bool DokanNotifyXAttrUpdate(
+            [MarshalAs(UnmanagedType.LPWStr)] string filePath);
+
+        /// <summary>
+        /// Notify dokan that a file or a directory has been renamed. This method
+        /// supports in-place rename for file/directory within the same parent.
+        /// </summary>
+        /// <param name="oldPath">Old path to the file or directory, including mount point.</param>
+        /// <param name="newPath">New path to the file or directory, including mount point.</param>
+        /// <param name="isDirectory">Indicates if the path is a directory.</param>
+        /// <param name="isInSameDirectory">Indicates if the file or directory have same parent.</param>
+        /// <returns>
+        /// <see cref="true"/> if notification succeeded.
+        /// </returns>
+        [DllImport(DOKAN_DLL, ExactSpelling = true)]
+        public static extern bool DokanNotifyRename(
+            [MarshalAs(UnmanagedType.LPWStr)] string oldPath,
+            [MarshalAs(UnmanagedType.LPWStr)] string newPath,
+            bool isDirectory,
+            bool isInSameDirectory);
+
         /*
         [DllImport(DOKAN_DLL, CharSet = CharSet.Unicode)]
         public static extern bool DokanIsNameInExpression([MarshalAs(UnmanagedType.LPWStr)] string expression,

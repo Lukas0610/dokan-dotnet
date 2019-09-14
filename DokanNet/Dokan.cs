@@ -218,6 +218,74 @@ namespace DokanNet
         }
 
         /// <summary>
+        /// Notify dokan that a file or a directory has been created.
+        /// </summary>
+        /// <param name="filePath">Full path to the file or directory, including mount point.</param>
+        /// <param name="isDirectory">Indicates if the path is a directory.</param>
+        /// <returns>
+        /// <see cref="true"/> if notification succeeded.
+        /// </returns>
+        public static bool NotifyCreate(string filePath, bool isDirectory)
+        {
+            return NativeMethods.DokanNotifyCreate(filePath, isDirectory);
+        }
+
+        /// <summary>
+        /// Notify dokan that a file or a directory has been deleted.
+        /// </summary>
+        /// <param name="filePath">Full path to the file or directory, including mount point.</param>
+        /// <param name="isDirectory">Indicates if the path is a directory.</param>
+        /// <returns>
+        /// <see cref="true"/> if notification succeeded.
+        /// </returns>
+        public static bool NotifyDelete(string filePath, bool isDirectory)
+        {
+            return NativeMethods.DokanNotifyDelete(filePath, isDirectory);
+        }
+
+        /// <summary>
+        /// Notify dokan that file or directory attributes have changed.
+        /// </summary>
+        /// <param name="filePath">Full path to the file or directory, including mount point.</param>
+        /// <returns>
+        /// <see cref="true"/> if notification succeeded.
+        /// </returns>
+        public static bool NotifyUpdate(string filePath)
+        {
+            return NativeMethods.DokanNotifyUpdate(filePath);
+        }
+
+        /// <summary>
+        /// Notify dokan that file or directory extended attributes have changed.
+        /// </summary>
+        /// <param name="filePath">Full path to the file or directory, including mount point.</param>
+        /// <returns>
+        /// <see cref="true"/> if notification succeeded.
+        /// </returns>
+        public static bool NotifyExtendedAttributesUpdate(string filePath)
+        {
+            return NativeMethods.DokanNotifyXAttrUpdate(filePath);
+        }
+
+        /// <summary>
+        /// Notify dokan that a file or a directory has been renamed. This method
+        /// supports in-place rename for file/directory within the same parent.
+        /// </summary>
+        /// <param name="oldPath">Old path to the file or directory, including mount point.</param>
+        /// <param name="newPath">New path to the file or directory, including mount point.</param>
+        /// <param name="isDirectory">Indicates if the path is a directory.</param>
+        /// <param name="isInSameDirectory">Indicates if the file or directory have same parent.</param>
+        /// <returns>
+        /// <see cref="true"/> if notification succeeded.
+        /// </returns>
+        public static bool NotifyRename(string oldPath, string newPath, bool isDirectory,
+            bool isInSameDirectory)
+        {
+            return NativeMethods.DokanNotifyRename(oldPath, newPath, isDirectory,
+                isInSameDirectory);
+        }
+
+        /// <summary>
         /// Retrieve native dokan dll version supported.
         /// </summary>
         /// <returns>Return native dokan dll version supported.</returns>
